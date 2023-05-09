@@ -1,21 +1,39 @@
 .mainContainer {
   display: flex;
-  flex-wrap: wrap;
+  padding: 30px 0px;
+  justify-content: center;
   gap: 20px;
-  justify-content: space-evenly;
-  padding: 40px 20px;
+  flex-wrap: wrap;
+  @media (max-width: 900px) {
+    flex-direction: column;
+    padding: 40px;
+  }
+}
+.cardParent {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0px 15px;
+}
+.container {
   background-color: #fefcfc;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  min-width: 300px;
 }
 .cardContainer {
-  background-color: azure;
   border-radius: 10px;
   box-shadow: 5px 5px 14px rgba(105, 105, 105, 0.13),
     -5px -5px 14px rgba(105, 105, 105, 0.13);
-  width: 200px;
+  width: 90%;
   display: flex;
   flex-direction: column;
   gap: 10px;
   padding: 20px 10px;
+  margin: 10px 0px;
   p {
     color: darkslategray;
     margin-bottom: 4px;
@@ -23,8 +41,23 @@
   span {
     font-size: 18px;
   }
+  button {
+    width: 80px;
+    background-color: rgb(171, 232, 232);
+    padding: 5px 10px;
+    border-radius: 10px;
+    border: none;
+    &:hover {
+      cursor: pointer;
+      transform: scale(1.05);
+    }
+  }
+  @media (max-width: 500px) {
+    min-width: 100px;
+  }
 }
 .title {
+  width: 100%;
   display: flex;
   justify-content: center;
   align-items: center;

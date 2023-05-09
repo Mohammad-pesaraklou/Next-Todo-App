@@ -1,29 +1,27 @@
-import axios from "axios";
 import { useRouter } from "next/router";
-import React, { useState } from "react";
+import { useState } from "react";
+import axios from "axios";
+// components
+import RadioButton from "./RadioButton";
+// icons
+import { FcTodoList } from "react-icons/fc";
+import { GrInProgress } from "react-icons/gr";
+import { VscOpenPreview } from "react-icons/vsc";
+import { IoMdDoneAll } from "react-icons/io";
 
 const AddTodoPage = () => {
-  const [todoForm, setTodoForm] = useState({
-    title: "",
-    description: "",
-    createdAt: Date.now(),
-  });
+  const [todoTitle, setTodoTitle] = useState("");
+  const [status, setStatus] = useState("todo");
   const router = useRouter();
-
-  const changeHandler = (e) => {
-    setTodoForm({
-      ...todoForm,
-      [e.target.name]: e.target.value,
-    });
-  };
 
   const sendData = async (e) => {
     e.preventDefault();
     const req = await axios.post("api/todo/addTodo", {
-      todoForm,
+      title: todoTitle,
+      status,
     });
-    todoForm.title = "";
-    todoForm.description = "";
+    setTodoTitle("");
+    setStatus("todo");
     if (req.status === 201) router.replace("/");
   };
 
@@ -41,14 +39,44 @@ const AddTodoPage = () => {
         <input
           type="text"
           name="title"
-          value={todoForm.title}
-          onChange={changeHandler}
+          value={todoTitle}
+          placeholder="Enter your Todo Title"
+          onChange={(e) => setTodoTitle(e.target.value)}
         />
-        <input
-          name="description"
-          value={todoForm.description}
-          onChange={changeHandler}
-        />
+        <RadioButton
+          status={status}
+          setStatus={setStatus}
+          title={"Todo"}
+          value={"todo"}
+        >
+          <FcTodoList />
+        </RadioButton>
+
+        <RadioButton
+          status={status}
+          setStatus={setStatus}
+          title={"InProgress"}
+          value={"inProgress"}
+        >
+          <GrInProgress />
+        </RadioButton>
+
+        <RadioButton
+          status={status}
+          setStatus={setStatus}
+          title={"Review"}
+          value={"review"}
+        >
+          <VscOpenPreview />
+        </RadioButton>
+        <RadioButton
+          status={status}
+          setStatus={setStatus}
+          title={"Done"}
+          value={"done"}
+        >
+          <IoMdDoneAll />
+        </RadioButton>
         <button type="submit">Add Todo</button>
       </form>
     </div>

@@ -1,4 +1,4 @@
-import { AppBar, Toolbar, Typography } from "@mui/material";
+import { AppBar, Stack, Toolbar, Typography } from "@mui/material";
 // style
 import styles from "../../styles/Navbar.module.scss";
 import SideBar from "./SideBar";
@@ -11,6 +11,19 @@ const Navbar = () => {
       <Toolbar>
         <div>
           <Typography variant="h4">Todo App</Typography>
+        </div>
+        <div className={styles.stack}>
+          <div>
+            <Link href={""}>
+              <p>Todo's</p>
+            </Link>
+            <Link href={"/addTodo"}>
+              <p>Add Todo</p>
+            </Link>
+            <Link href={""}>
+              <p>Profile</p>
+            </Link>
+          </div>
         </div>
         <div className={styles.sidebar}>
           <SideBar />

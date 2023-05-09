@@ -11,13 +11,4 @@ const AddTodo = ({ session }) => {
   );
 };
 
-// export async function getStaticProps(context) {
-//   const { req } = context;
-//   const session = await getSession({ req });
-//   console.log(session?.status);
-//   return {
-//     props: { session },
-//   };
-// }
-
 export default AddTodo;
