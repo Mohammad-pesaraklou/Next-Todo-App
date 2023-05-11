@@ -3,7 +3,7 @@ import { AppBar, Stack, Toolbar, Typography } from "@mui/material";
 import styles from "../../styles/Navbar.module.scss";
 import SideBar from "./SideBar";
 import Link from "next/link";
-import { signIn } from "next-auth/react";
+import { signIn, signOut } from "next-auth/react";
 
 const Navbar = () => {
   return (
@@ -30,6 +30,7 @@ const Navbar = () => {
         </div>
         <Link href={"/signup"}>SIGN Up</Link>
         <Link href={"/signin"}>SIGN In</Link>
+        <button onClick={() => signOut()}>Log Out</button>
       </Toolbar>
     </AppBar>
   );

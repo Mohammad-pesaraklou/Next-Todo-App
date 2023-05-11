@@ -6,19 +6,10 @@ export default function Home() {
   const router = useRouter();
   const { status } = useSession();
 
-  if (status === "unauthenticated") return router.replace("/signin");
+  if (status === "unauthenticated") router.replace("/signup");
   return (
     <div>
       <TodoPage />
     </div>
   );
 }
-
-// export async function getStaticProps(context) {
-
-//   const data = await Todo
-
-//   return {
-//     props: { session },
-//   };
-// }

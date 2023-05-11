@@ -1,93 +1,68 @@
-import axios from "axios";
+import { useSession } from "next-auth/react";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
+import axios from "axios";
 // style
 import styles from "../../styles/TodoCard.module.scss";
-import { RiTodoLine } from "react-icons/ri";
-// icon
+// components
+import Tasks from "./Tasks";
+
 const TodoPage = () => {
   const [todos, setTodos] = useState(null);
+
+  const { status } = useSession();
+
+  const router = useRouter();
 
   const getData = async () => {
     const req = await axios("api/todo/getTodo");
     setTodos(req.data.data);
   };
-
-  useEffect(() => {
-    getData();
-  }, []);
+  if (status === "authenticated") {
+    useEffect(() => {
+      getData();
+    }, []);
+  }
 
   return (
     <div className={styles.mainContainer}>
       {/* todo section */}
-      <div className={styles.container}>
-        <div className={styles.title}>
-          <h1>Todo</h1>
-        </div>
-        <div className={styles.cardParent}>
-          {todos?.todo?.map((i) => (
-            <div className={styles.cardContainer}>
-              <RiTodoLine />
-              <div>
-                <span>{i.title}</span>
-              </div>
-
-              <button onClick={() => nextHandler(i)}>Next</button>
-            </div>
-          ))}
-        </div>
+      <div>
+        <Tasks
+          data={todos?.todo}
+          next={"inProgress"}
+          title="Todo"
+          fetcher={getData}
+        />
       </div>
       {/* progress section */}
-      <div className={styles.container}>
-        <div className={styles.title}>
-          <h1>In Progress</h1>
-        </div>
-        <div className={styles.cardParent}>
-          {todos?.inProgress?.map((i) => (
-            <div className={styles.cardContainer}>
-              <RiTodoLine />
-              <div>
-                <span>{i.title}</span>
-              </div>
-
-              <button onClick={() => nextHandler(i)}>Next</button>
-            </div>
-          ))}
-        </div>
+      <div>
+        <Tasks
+          data={todos?.inProgress}
+          next={"review"}
+          back="todo"
+          title="In Progress"
+          fetcher={getData}
+        />
       </div>
-      <div className={styles.container}>
-        <div className={styles.title}>
-          <h1>Review</h1>
-        </div>
-        <div className={styles.cardParent}>
-          {todos?.review?.map((i) => (
-            <div className={styles.cardContainer}>
-              <RiTodoLine />
-              <div>
-                <span>{i.title}</span>
-              </div>
-
-              <button onClick={() => nextHandler(i)}>Next</button>
-            </div>
-          ))}
-        </div>
+      {/* review section*/}
+      <div>
+        <Tasks
+          data={todos?.review}
+          next={"done"}
+          back="inProgress"
+          title="Review"
+          fetcher={getData}
+        />
       </div>
       {/* done section */}
-      <div className={styles.container}>
-        <div className={styles.title}>
-          <h1>Done</h1>
-        </div>
-        <div className={styles.cardParent}>
-          {todos?.done?.map((i) => (
-            <div className={styles.cardContainer}>
-              <RiTodoLine />
-              <div>
-                <span>{i.title}</span>
-              </div>
-
-              <button onClick={() => nextHandler(i)}>Next</button>
-            </div>
-          ))}
-        </div>
+      <div>
+        <Tasks
+          data={todos?.done}
+          title="Done"
+          back="review"
+          fetcher={getData}
+        />
       </div>
     </div>
   );

@@ -5,9 +5,7 @@ import { useRouter } from "next/router";
 const SignIn = () => {
   const [form, setForm] = useState({ email: "", password: "" });
   const router = useRouter();
-  const { data, status } = useSession();
-
-  console.log(status);
+  const { status } = useSession();
 
   const changeHandler = (e) => {
     setForm({
@@ -27,7 +25,6 @@ const SignIn = () => {
       password,
       redirect: false,
     });
-    console.log(req);
     if (!req.error) router.replace("/");
   };
 

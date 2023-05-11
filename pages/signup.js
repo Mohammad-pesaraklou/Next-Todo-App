@@ -6,7 +6,7 @@ import React, { useEffect, useState } from "react";
 const Signup = () => {
   const [form, setForm] = useState({ email: "", password: "" });
   const router = useRouter();
-  const { data, status } = useSession();
+  const { status } = useSession();
 
   const changeHandler = (e) => {
     setForm({

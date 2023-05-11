@@ -6,7 +6,7 @@ import Link from "next/link";
 const SideBar = () => {
   const session = useSession();
   const { status } = session;
-  console.log({ session, status });
+
   return (
     <div>
       <div className={styles.container}>
@@ -15,13 +15,13 @@ const SideBar = () => {
         </Typography>
         {status === "authenticated" && (
           <ul>
-            <Link href={""}>
+            <Link href={"/"}>
               <li>Todo's</li>
             </Link>
             <Link href={"/addTodo"}>
               <li>Add Todo</li>
             </Link>
-            <Link href={""}>
+            <Link href={"/profile"}>
               <li>Profile</li>
             </Link>
           </ul>
