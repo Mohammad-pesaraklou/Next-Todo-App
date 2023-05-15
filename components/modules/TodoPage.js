@@ -12,17 +12,14 @@ const TodoPage = () => {
 
   const { status } = useSession();
 
-  const router = useRouter();
+  useEffect(() => {
+    getData();
+  }, []);
 
   const getData = async () => {
     const req = await axios("api/todo/getTodo");
-    setTodos(req.data.data);
+    if (req.data.status === "success") setTodos(req.data.data);
   };
-  if (status === "authenticated") {
-    useEffect(() => {
-      getData();
-    }, []);
-  }
 
   return (
     <div className={styles.mainContainer}>
@@ -41,7 +38,7 @@ const TodoPage = () => {
           data={todos?.inProgress}
           next={"review"}
           back="todo"
-          title="In Progress"
+          title="InProgress"
           fetcher={getData}
         />
       </div>

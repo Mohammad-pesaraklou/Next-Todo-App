@@ -1,14 +1,18 @@
-import ProfileForm from "@/components/modules/ProfileForm";
+import { getSession, useSession } from "next-auth/react";
 import TodoUser from "@/models/User";
-import axios from "axios";
-import { getSession } from "next-auth/react";
 import { useState } from "react";
+import axios from "axios";
+// component
+import ProfileForm from "@/components/modules/ProfileForm";
+import { useRouter } from "next/router";
+import ProfilePage from "@/components/modules/ProfilePage";
 
 const Profile = ({ todoUser }) => {
   const [form, setForm] = useState({ name: "", lastName: "" });
-  const [userData, setUserData] = useState({});
-  const updateHandler = async (e) => {
-    // e.preventDefault();
+  const { status } = useSession();
+  const router = useRouter();
+
+  const updateHandler = async () => {
     const req = await axios.post("api/todo/updateTodo", {
       name: form.name,
       lastName: form.lastName,
@@ -24,6 +28,8 @@ const Profile = ({ todoUser }) => {
     });
   };
 
+  if (status === "unauthenticated") router.replace("/signin");
+
   if (!todoUser?.name)
     return (
       <ProfileForm
@@ -33,23 +39,7 @@ const Profile = ({ todoUser }) => {
       />
     );
 
-  return (
-    <div>
-      <h1>Profile</h1>
-      <div>
-        <p>Name:</p>
-        <span>{todoUser?.name}</span>
-      </div>
-      <div>
-        <p>LastName:</p>
-        <span>{todoUser?.lastName}</span>
-      </div>
-      <div>
-        <p>Email:</p>
-        <span>{todoUser?.email}</span>
-      </div>
-    </div>
-  );
+  return <ProfilePage todoUser={todoUser} />;
 };
 
 export default Profile;

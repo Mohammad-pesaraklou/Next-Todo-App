@@ -1,32 +1,28 @@
-import React, { useState } from "react";
+// style
+import styles from "../../styles/Form.module.scss";
 
 const ProfileForm = ({ changeHandler, updateHandler, form }) => {
   return (
-    <form
-      style={{
-        display: "flex",
-        flexDirection: "column",
-        gap: "20px",
-        padding: "50px",
-      }}
-      onSubmit={updateHandler}
-    >
-      <input
-        type="text"
-        name="name"
-        value={form.name}
-        onChange={changeHandler}
-        placeholder="Please Enter Your Name"
-      />
-      <input
-        type="text"
-        name="lastName"
-        value={form.lastName}
-        onChange={changeHandler}
-        placeholder="Please Enter Your lastName"
-      />
-      <button type="submit">Update</button>
-    </form>
+    <div className={styles.container}>
+      <form onSubmit={updateHandler}>
+        <h1>Complete Your Information</h1>
+        <input
+          type="text"
+          name="name"
+          value={form.name}
+          onChange={changeHandler}
+          placeholder="Please Enter Your Name"
+        />
+        <input
+          type="text"
+          name="lastName"
+          value={form.lastName}
+          onChange={changeHandler}
+          placeholder="Please Enter Your lastName"
+        />
+        <button type="submit">Update</button>
+      </form>
+    </div>
   );
 };
 

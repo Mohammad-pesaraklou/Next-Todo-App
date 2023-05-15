@@ -1,0 +1,91 @@
+.container {
+  display: flex;
+  width: 100%;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 0px 10px;
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: 30px;
+    width: 100%;
+    .input {
+      border: none;
+      border-radius: 8px;
+      margin-top: 5px;
+      background-color: #fff;
+      color: #7f7e86;
+      font-size: 1rem;
+      box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+      padding: 5px 15px;
+      height: 35px;
+      outline: none;
+      max-width: 500px;
+    }
+    div {
+      display: flex;
+      min-width: 150px;
+      border-radius: 10px;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      color: white;
+    }
+    button {
+      max-width: 120px;
+      border: none;
+      background-color: #7f7e86;
+      border-radius: 10px;
+      padding: 10px 20px;
+      color: white;
+      &:hover {
+        background-color: rgb(186, 185, 185);
+        cursor: pointer;
+      }
+    }
+  }
+}
+.todo {
+  padding: 10px;
+
+  background-color: #f2b82e;
+  label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+  }
+}
+.inProgress {
+  padding: 10px;
+
+  background-color: #1be2b1;
+  label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+  }
+}
+.review {
+  padding: 10px;
+
+  background-color: #3f79f7;
+  label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+  }
+}
+.done {
+  padding: 10px;
+
+  background-color: #14d3e2;
+  label {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 5px;
+  }
+}

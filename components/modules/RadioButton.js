@@ -1,6 +1,15 @@
-const RadioButton = ({ status, setStatus, value, title, children }) => {
+import styles from "../../styles/AddForm.module.scss";
+
+const RadioButton = ({
+  status,
+  setStatus,
+  value,
+  children,
+  title,
+  backColor,
+}) => {
   return (
-    <div>
+    <div className={styles[backColor]}>
       <label>
         {children}
         {title}

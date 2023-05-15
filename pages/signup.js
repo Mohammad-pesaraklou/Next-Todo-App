@@ -1,7 +1,10 @@
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/router";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
+// style
+import styles from "../styles/Form.module.scss";
+import Link from "next/link";
 
 const Signup = () => {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -32,28 +35,27 @@ const Signup = () => {
   };
 
   return (
-    <div>
-      <form
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          gap: "20px",
-          padding: "50px",
-        }}
-        onSubmit={sendData}
-      >
+    <div className={styles.container}>
+      <form onSubmit={sendData}>
+        <h1>Sign Up Here</h1>
         <input
           type="text"
           name="email"
           value={form.email}
           onChange={changeHandler}
+          placeholder="Please Enter Your Email"
         />
         <input
           type="password"
           name="password"
           value={form.password}
           onChange={changeHandler}
+          placeholder="Please Enter Your Password"
         />
+        <p>
+          You don't have sign up already?
+          <Link href={"signin"}>click here.</Link>
+        </p>
         <button type="submit">Sign Up</button>
       </form>
     </div>
