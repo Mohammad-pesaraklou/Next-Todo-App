@@ -1,9 +1,19 @@
-import { RiTodoLine } from "react-icons/ri";
+import { useRouter } from "next/router";
+import Link from "next/link";
 import axios from "axios";
+// icon
+import { CiEdit } from "react-icons/ci";
+import { RiTodoLine } from "react-icons/ri";
+import { BsTrash } from "react-icons/bs";
+
 // style
 import styles from "../../styles/TodoCard.module.scss";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Tasks = ({ data, title, next, back, fetcher }) => {
+  const router = useRouter();
+
   const updateHandler = async (id, status) => {
     const req = await axios.patch("api/todo/updateTodo", {
       id,
@@ -11,6 +21,14 @@ const Tasks = ({ data, title, next, back, fetcher }) => {
     });
     console.log(req.data);
     fetcher();
+  };
+  const deleteHandler = async (id) => {
+    const req = await axios.delete(`/api/todo/${id}`);
+    console.log(req);
+    if (req.status === 200) {
+      toast.success("Your Todo Added successfully!");
+      router.reload();
+    }
   };
 
   return (
@@ -21,18 +39,37 @@ const Tasks = ({ data, title, next, back, fetcher }) => {
       <div className={styles.cardParent}>
         {data?.map((i) => (
           <div key={i.title} className={styles.cardContainer}>
-            <RiTodoLine />
-            <div>
+            <div className={styles.iconContainer}>
+              <RiTodoLine />
+              <div>
+                <Link href={`todo/${i._id}`}>
+                  <CiEdit className={styles.edit} />
+                </Link>
+                <BsTrash
+                  onClick={() => deleteHandler(i._id)}
+                  className={styles.trash}
+                />
+              </div>
+            </div>
+            <div style={{ padding: "10px 0px" }}>
               <span>{i.title}</span>
             </div>
-            <div className={styles.btnHandler}>
+            <div className={styles.btnContainer}>
               {back && (
-                <button name="back" onClick={(e) => updateHandler(i._id, back)}>
+                <button
+                  className={styles.backBtn}
+                  name="back"
+                  onClick={(e) => updateHandler(i._id, back)}
+                >
                   Back
                 </button>
               )}
               {next && (
-                <button name="next" onClick={(e) => updateHandler(i._id, next)}>
+                <button
+                  className={styles.nextBtn}
+                  name="next"
+                  onClick={(e) => updateHandler(i._id, next)}
+                >
                   Next
                 </button>
               )}

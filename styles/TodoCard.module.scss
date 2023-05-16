@@ -4,8 +4,28 @@
   justify-content: center;
   align-items: center;
   padding: 10px 0px;
+  color: honeydew;
 }
-
+@mixin icon($color) {
+  font-size: 20px;
+  &:hover {
+    cursor: pointer;
+    color: $color;
+  }
+}
+@mixin button($bgColor) {
+  width: 80px;
+  background-color: $bgColor;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 10px;
+  border: none;
+  &:hover {
+    cursor: pointer;
+    transform: scale(1.05);
+    transition: all 0.3s ease;
+  }
+}
 .mainContainer {
   display: flex;
   padding: 30px 0px;
@@ -33,6 +53,22 @@
   min-width: 300px;
   min-height: 250px;
 }
+.iconContainer {
+  display: flex;
+  justify-content: space-between;
+  div {
+    display: flex;
+    justify-content: center;
+    gap: 5px;
+    padding-right: 5px;
+  }
+}
+.edit {
+  @include icon(#3f79f7);
+}
+.trash {
+  @include icon(#ed3f0a);
+}
 .cardContainer {
   border-radius: 10px;
   box-shadow: 5px 5px 14px rgba(105, 105, 105, 0.13),
@@ -50,20 +86,21 @@
   span {
     font-size: 18px;
   }
-  button {
-    width: 80px;
-    background-color: rgb(171, 232, 232);
-    padding: 5px 10px;
-    border-radius: 10px;
-    border: none;
-    &:hover {
-      cursor: pointer;
-      transform: scale(1.05);
-    }
+  .backBtn {
+    @include button(rgba(243, 147, 22, 0.66));
+  }
+  .nextBtn {
+    @include button(rgb(171, 232, 232));
   }
   @media (max-width: 500px) {
     min-width: 100px;
   }
+}
+.btnContainer {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5rem;
 }
 .Todo {
   background-color: #f2b82e;

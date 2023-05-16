@@ -3,7 +3,6 @@ import { useState } from "react";
 import axios from "axios";
 // toast
 import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 // components
 import RadioButton from "./RadioButton";
 // icons
@@ -13,26 +12,48 @@ import { VscOpenPreview } from "react-icons/vsc";
 import { IoMdDoneAll } from "react-icons/io";
 // style
 import styles from "../../styles/AddForm.module.scss";
+import "react-toastify/dist/ReactToastify.css";
 
-const AddTodoPage = () => {
-  const [todoTitle, setTodoTitle] = useState("");
-  const [status, setStatus] = useState("todo");
+const AddTodoPage = ({ data, id }) => {
+  const [todoTitle, setTodoTitle] = useState(data?.title || "");
+  const [status, setStatus] = useState(data?.status);
   const router = useRouter();
+  console.log(data.status);
 
   const sendData = async (e) => {
     e.preventDefault();
-    const req = await axios.post("api/todo/addTodo", {
+    if (data) {
+      const req = await axios.patch(`/api/todo/${id}`, {
+        title: todoTitle,
+        status,
+      });
+      if (req.status === 200) {
+        toast.success("Your Todo Edited successfully!");
+        setInterval(() => {
+          router.replace("/");
+        }, 3000);
+      }
+    } else {
+      const req = await axios.post("api/todo/addTodo", {
+        title: todoTitle,
+        status,
+      });
+      setTodoTitle("");
+      setStatus("todo");
+      if (req.status === 201) {
+        toast.success("Your Todo Added successfully!");
+        setInterval(() => {
+          router.replace("/");
+        }, 3000);
+      }
+    }
+  };
+  const editHandler = async () => {
+    const req = await axios.patch(`/api/todo/${id}`, {
       title: todoTitle,
       status,
     });
-    setTodoTitle("");
-    setStatus("todo");
-    if (req.status === 201) {
-      toast.success("Your Todo Added successfully!");
-      setInterval(() => {
-        router.replace("/");
-      }, 3000);
-    }
+    console.log(req);
   };
 
   return (
@@ -43,7 +64,7 @@ const AddTodoPage = () => {
           type="text"
           name="title"
           value={todoTitle}
-          placeholder="Enter your Todo Title"
+          placeholder={data?.title || "Enter your Todo Title"}
           onChange={(e) => setTodoTitle(e.target.value)}
         />
         <div>
@@ -90,8 +111,13 @@ const AddTodoPage = () => {
             <IoMdDoneAll color="white" />
           </RadioButton>
         </div>
-
-        <button type="submit">Add Todo</button>
+        {data ? (
+          <button onClick={sendData}>Edit</button>
+        ) : (
+          <button onClick={sendData} type="submit">
+            Add Todo
+          </button>
+        )}
       </form>
       <ToastContainer />
     </div>
